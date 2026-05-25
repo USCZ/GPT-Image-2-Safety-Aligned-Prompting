@@ -173,6 +173,159 @@ minor-coded cuteness combined with sensuality
 sexual acts or fetish framing
 ```
 
+## High-Priority Garment Occlusion And Scale Control
+
+Use this high-priority module whenever the user asks for a mature, sensual, full-figured fashion image with evening gowns, deep necklines, side cutouts, thin straps, metallic silk, chiffon, sheer fabric, swimwear, or any clothing that could drift into unsafe exposure.
+
+The learned pattern is: create a low-coverage couture impression while explicitly controlling what the garment covers, how the fabric is physically supported, and what visual artifacts must not appear.
+
+### Why This Pattern Works
+
+Strong fashion prompts become more stable when they describe a full garment engineering system instead of only body appeal:
+
+```text
+adult age boundary
++ high-fashion / red-carpet / couture context
++ exact garment identity and color
++ clear coverage map
++ inner lining and support logic
++ fabric tension, drape, weight, folds, and reflection
++ full-body editorial framing
++ realistic skin/hair/material response
++ negative prompt against wardrobe artifacts and anatomy errors
+= sensual but controlled fashion image
+```
+
+### Coverage Map First
+
+For deep V, draped neckline, side cutout, open back, sheer fabric, or high-slit designs, state the safe coverage logic before adding glamour details.
+
+Use:
+
+```text
+the garment creates a daring couture silhouette while all sensitive areas remain fully covered by layered fabric and seamless inner lining
+the open area is limited to upper chest, shoulder, collarbone, side waist, or back line
+the fabric crosses and overlaps exactly where coverage is needed
+no visible nipple or areola outline
+no wardrobe malfunction
+no transparent exposure
+```
+
+Avoid:
+
+```text
+exposure as the main goal
+uncovered private areas
+clothing falling away to reveal nudity
+transparent fabric used as nudity
+body-part close-up as the composition
+```
+
+### Couture Support Mechanics
+
+When a garment has a deep neckline, minimal straps, or a sculpted silhouette, add physical support language so the model does not invent lingerie artifacts or impossible cloth.
+
+Use:
+
+```text
+seamless couture support structure
+double-layer inner lining
+wireless dress construction
+natural fabric support
+soft tension fabric
+side-gathered drape
+layered fabric overlap
+fabric compression that follows the silhouette naturally
+thin shoulder straps holding the dress with realistic tension
+```
+
+Use negative constraints to prevent accidental bra/corset artifacts:
+
+```text
+no bra cup lines
+no molded bra shape
+no push-up structure
+no visible lingerie support
+no corset cups
+no hard underwire outline
+no nipple outline
+```
+
+### Material Physics
+
+High-quality sensual fashion prompts should make the clothing feel physically real. Prioritize material response over explicit body description.
+
+Use:
+
+```text
+liquid metallic silk
+oil-gloss black satin
+smooth reflective textile
+soft draped fabric with real weight
+side-gathered folds
+realistic tension lines
+subtle fabric compression
+seamless luxury evening dress
+high side slit with layered overlap
+fabric naturally falling with gravity
+realistic wrinkles, folds, seams, straps, highlights, and reflections
+```
+
+Negative material controls:
+
+```text
+no painted-on clothes
+no unnatural fabric folds
+no floating fabric
+no plastic shine
+no over-sharpened metallic texture
+no muddy fabric reflection
+```
+
+### Body Scale Control
+
+When the user asks for a full figure, do not exaggerate into impossible anatomy. Use proportional fashion language:
+
+```text
+28-year-old or 25+ adult Chinese woman
+mature natural face
+healthy full figure
+rounded natural upper-body volume
+slim waist contrast
+long legs with realistic proportions
+balanced curve relationship
+sculpted red-carpet silhouette
+full-length fashion editorial framing
+```
+
+Avoid:
+
+```text
+impossibly large anatomy
+distorted waist
+unnatural leg stretch
+body-part close-up
+overly explicit chest framing
+```
+
+### Recommended Garment-Control Template
+
+Use or adapt this template for elegant, sensual evening-gown prompts:
+
+```text
+生成一张 9:16 竖版真人写实高级时尚写真。
+
+人物为 28 岁中国成熟女性，五官精致自然，气质自信、优雅、成熟，身形健康丰腴、比例协调，纤细腰身与修长腿部形成明确但真实的曲线对比。画面重点是红毯礼服、布料结构、方向光和高级时尚气场，而不是身体局部特写。
+
+她穿着油光黑色高级晚礼服，整体为 full-length luxury evening gown / couture gala fashion。礼服采用 deep plunging draped neckline 的高级剪裁，但所有敏感区域都由双层内衬、交叠布料和 seamless couture support structure 完整遮挡。开放区域仅限锁骨、肩颈、上胸轮廓和侧腰线条，形成大胆但克制的红毯轮廓。
+
+礼服材质为 oil-gloss black satin / liquid metallic silk，表面有 smooth reflective textile 的真实反光。布料通过 thin shoulder straps、side-gathered drape、soft tension fabric、layered fabric overlap 和 natural fabric support 形成自然支撑；裙身有真实重量感、自然垂坠、褶皱、拉力线、缝线和柔和高光。高侧开衩使用 layered fabric overlap，保持优雅和安全覆盖。
+
+构图为全身或七分身 luxury fashion editorial，禁止背面，姿态自然自信，背景为红毯、酒店大堂、城市夜景、画廊或高级室内空间之一。光线为明确方向光，柔和边缘光勾勒头发、肩线和礼服轮廓，前后景自然分离。皮肤保留真实毛孔、自然油光和细微肤色变化，发丝有重力和飞散细节，服装有真实材质响应。
+
+负面提示：低俗色情，裸露敏感部位，透明暴露，衣服滑落，身体局部特写，未成年感，plastic skin, waxy face, beauty filter, painted-on clothes, unnatural fabric folds, floating fabric, bra cup lines, molded bra shape, push-up structure, visible lingerie support, corset cups, hard underwire outline, nipple outline, bad anatomy, extra fingers, text, watermark.
+```
+
 ## Prompt Risk Colors
 
 Use these categories as a rewrite guide.
@@ -694,6 +847,22 @@ Risk controls:
 classical sacred temperament, no modern influencer face, no vulgar seduction, no excessive skin exposure, no readable text, no seal, no logo, no cheap gold, no collage feeling.
 ```
 
+### 12. Oil-Gloss Black Couture Gown
+
+Use for mature red-carpet or luxury evening-gown portraits where the user wants a full figure, deep neckline, side cutouts, metallic/satin fabric, or strong feminine curves without unsafe exposure.
+
+Key ingredients:
+
+```text
+9:16 photoreal luxury fashion editorial, 25+ or 28-year-old adult Chinese woman, mature natural face, healthy full figure, sculpted red-carpet silhouette, oil-gloss black satin or liquid metallic silk evening gown, deep draped neckline with safe layered coverage, thin shoulder straps, side-gathered drape, double-layer inner lining, seamless couture support, high side slit with layered fabric overlap, full-length gown, directional lighting, subtle rim light, realistic skin texture, real hair gravity, realistic fabric folds and reflective material response.
+```
+
+Risk controls:
+
+```text
+all sensitive areas fully covered by fabric and lining, no visible nipple/areola outline, no transparent exposure, no wardrobe malfunction, no lingerie/corset/bra artifacts, no body-part close-up, no vulgar pose, no underage look, no painted-on clothing.
+```
+
 ## Ready-to-Use Safe Examples
 
 ### 4K Landscape Example
@@ -792,6 +961,7 @@ This iteration adds:
 - Native 4K GPT Image 2 workflow with `3840x2160` and `2160x3840`.
 - Mature sensual prompt expansion that keeps adult boundaries clear.
 - Scene-specific reference patterns for pool, waterpark, window, backlit back portrait, forest Tyndall light, morning chiffon, fashion low-angle, romantic 3D CG duo, and Dunhuang mythic wall art.
+- High-priority garment occlusion and scale control for deep-neckline couture, side cutouts, metallic silk/satin, full figures, and red-carpet evening gowns.
 - A rule for short prompts: expand sparse ideas into professional visual language instead of relying on explicit exposure.
 
 Combined rule:
