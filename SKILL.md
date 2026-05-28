@@ -6,6 +6,7 @@ This skill is based on:
 - Li Yue article version 1: "99%的人都写错了，GPT Image 2 生成美女，千万别直接写“性感”", article id `2056764035287359488`.
 - Li Yue article version 2: "GPT Image 2 安全审查真相：不是只看“性感”，而是在预测你的意图", article id `2057435047138037760`.
 - Additional user-supplied prompt references covering 4K API generation, mature sensual portrait expansion, swimwear, waterpark candid photography, backlit back-focused editorial portraits, low-angle outdoor fashion, forest Tyndall lighting, morning chiffon editorial portraits, 3D CG fantasy character posters, and Dunhuang cracked-wall mythic art.
+- Additional user-supplied prompt references covering elegant roleplay fashion, fantasy elf portraits, nurse-themed studio portraits, xianxia action posters, ice fantasy cosplay, soft guofeng portraits, Japanese cinematic flower close-ups, rainy neon fashion portraits, Xiaohongshu lifestyle stills, pure portrait parameter systems, 3D CG bedroom characters, bridal couture magazine covers, product exploded-structure infographics, new-Chinese guofeng half portraits, oriental scroll breakout posters, White Snake character archive posters, reference-photo mural portraits, overhead flash bedroom editorials, and waterpark candid snapshots.
 - OpenAI official image-generation documentation checked on 2026-05-25: `gpt-image-2` supports flexible image sizes up to 4K-class outputs, including `3840x2160` and `2160x3840`, with `quality` values such as `high` and `output_format` values such as `png`.
 
 Important framing: do not help users bypass, defeat, or evade safety systems. The goal is to express a safe creative intent more clearly, reduce accidental false positives, and generate compliant, tasteful, non-exploitative images. If the user says "过审", interpret it as "make the prompt safety-aligned and clear".
@@ -132,6 +133,88 @@ Avoid building the prompt around body stimulation, sexual invitation, body-part 
 - Lighting, composition, color, background, atmosphere, and camera style.
 - Commercial, editorial, product, lifestyle, cinematic, or character-design context.
 - Explicit safety boundaries such as no nudity, no explicit sexual content, no body-part close-up, and no underage appearance.
+
+## Image Type Recognition Router
+
+When the user provides a short prompt, first infer the likely image type, then expand with the matching pattern library. Do this silently unless the user asks for analysis.
+
+Use keyword-to-route recognition:
+
+```text
+格纹制服 / 眼罩 / 托盘 / 胸牌 / 包厢 -> adult roleplay fashion portrait
+护士帽 / 听诊器 / 白色制服 / wink -> light nurse-themed studio fashion portrait
+精灵 / 尖耳 / 森林 / 银白长发 / 宝石额饰 -> realistic fantasy elf portrait
+剑修 / 持剑 / 云海 / 古松 / 超广角 -> xianxia action concept poster
+冰蓝假发 / 冰雪 / 宝石肩饰 / Cos -> ice fantasy cosplay portrait
+古风走廊 / 木柱 / 纱裙 / 花饰 -> soft guofeng cosplay portrait
+花海 / 日系 / 逆光 / Komorebi / 胶片 -> Japanese cinematic flower close-up
+雨夜 / 霓虹 / 雨伞 / 比基尼 -> rainy neon fashion portrait
+小红书 / 生活剧照 / 卧室 / 窗边 / 真实日常 -> Xiaohongshu natural lifestyle still
+清纯写真 / 参数选择 -> pure youthful adult portrait generator
+丰腴曲线 / 参数锁定 -> locked-parameter curvy portrait generator
+床边 / 3D CG / 黑色缎面 / 月光 -> 3D CG bedroom character poster
+婚纱 / 杂志封面 / 双人 / VOGUE -> bridal couture magazine cover
+产品爆炸结构 / 信息板 / 部件标签 -> product exploded-structure infographic
+新中式 / 琴棋书画 / 半身人像 -> new-Chinese guofeng half portrait
+画卷 / 破卷而出 / 画中美人 -> oriental scroll breakout poster
+白蛇传 / 立像档案 / 剧情切片 -> White Snake character archive poster
+上传肖像 / 自己画自己 / 白墙壁画 -> reference-photo mural portrait concept
+俯拍 / 白床 / 直闪 / 冷甜 -> overhead flash bedroom editorial
+水上乐园 / iPhone 抓拍 / 滑水道 -> waterpark candid snapshot
+```
+
+After routing:
+
+```text
+1. Preserve locked user parameters exactly.
+2. Add adult boundary if the image contains beauty, sensuality, cosplay, swimwear, bedroom, or intimate styling.
+3. Expand with the route's scene, wardrobe, pose, lens, light, texture, and negative constraints.
+4. Translate "性感/漂亮/撩人/丰满" into professional visual language: fashion styling, gaze, silhouette, fabric, light, skin texture, composition.
+5. Remove or redirect explicit sexual acts, sexualized minor cues, non-consensual framing, and body-part close-ups.
+```
+
+## Parameter Locking
+
+When the user provides a parameter template, obey locked values exactly. Do not replace them with a more convenient style.
+
+Rules:
+
+```text
+User-filled value -> must preserve and expand only.
+"自动" or blank -> agent may choose the most coherent option.
+Style controls scene, clothing, light, lens, pose, and mood.
+Face direction controls face shape, eye type, nose, lips, bone structure, soft tissue, expression, and recognizability.
+Body direction controls silhouette and proportion; do not let style overwrite body direction.
+If style and face direction conflict, keep both and harmonize through makeup, expression, color temperature, pose tension, and scene atmosphere.
+```
+
+For parameter-driven requests, output this structure unless the user asks only for the final prompt:
+
+```text
+1. 参数锁定复核
+2. 完整生成提示词
+3. 本次自动补全部分
+4. 主要吸睛点
+5. 负面限制词
+```
+
+## Face And Beauty Diversity
+
+Do not generate the same default AI face for every woman. Apply "not average but harmonious" facial design:
+
+```text
+温柔圆脸型: soft round face, warm eyes, gentle cheek volume, friendly expression
+清冷高级脸: longer facial plane, refined cheekbones, calm narrow eyes, restrained expression
+古典鹅蛋脸: balanced oval face, soft jawline, classical brows, elegant lips
+明艳浓颜脸: stronger facial contrast, defined eyes, fuller lips, vivid expression
+甜酷小方脸: compact square-soft jaw, bright eyes, playful-cool expression
+电影故事脸: natural asymmetry, memorable eyes, subtle imperfections, emotional gaze
+知性长脸型: mature long oval face, calm brow-eye relationship, intelligent expression
+东方丹凤眼: elongated upward eye shape, subtle classical charm, controlled expression
+自然生活感脸: realistic everyday face, not influencer-like, gentle imperfections
+```
+
+Always keep adult cues clear; "young" means young adult, not childlike.
 
 ## Mature Allure Translation
 
@@ -863,6 +946,344 @@ Risk controls:
 all sensitive areas fully covered by fabric and lining, no visible nipple/areola outline, no transparent exposure, no wardrobe malfunction, no lingerie/corset/bra artifacts, no body-part close-up, no vulgar pose, no underage look, no painted-on clothing.
 ```
 
+### 13. Adult Roleplay Uniform Fashion Portrait
+
+Use for elegant adult roleplay styling with uniform-like garments, eye masks, badges, trays, tablets, or dark interior spaces.
+
+Key ingredients:
+
+```text
+9:16 photoreal indoor roleplay fashion portrait, young adult Asian woman, dark corridor or private lounge interior, plaid uniform-inspired fitted mini dress, ruffled trim, high collar, waist structure, badge lanyard, black lace eye mask, white thigh-high socks or garter-inspired styling, holding a tray or tablet, full-body vertical composition, focused moody light, mysterious theatrical mood, clear fabric and prop details.
+```
+
+Risk controls:
+
+```text
+adult roleplay fashion not schoolgirl, no underage cues, no explicit sexual action, no vulgar pose, no body-part close-up, eye mask correctly shaped, prop not deformed, background clean.
+```
+
+### 14. Realistic Fantasy Elf Close-Up
+
+Use for young-adult but non-childlike fantasy elf portraits with forest dawn light.
+
+Key ingredients:
+
+```text
+9:16 high-finish realistic fantasy portrait, visually young but clearly adult East Asian elf woman, champagne-silver long wavy hair, pointed ears, crystal earrings, jeweled forehead ornament, pale blue/silver/gold tulle gown, vine embroidery, tiny gemstones, morning forest, ancient trees, warm gold side-backlight, light dust, soft mist, ultra-close bust portrait, face, ears, hair, jewelry, shoulder-neck line, real skin texture, shallow depth of field.
+```
+
+Risk controls:
+
+```text
+not childlike, no middle-aged heaviness if user asks youthful elegance, no excessive skin exposure, no plastic fantasy skin, no anime-only face when realism is requested.
+```
+
+### 15. Light Nurse-Themed Studio Fashion
+
+Use for clean, playful, adult nurse-themed cosplay fashion portraits.
+
+Key ingredients:
+
+```text
+9:16 realistic studio role portrait, young adult East Asian woman, white nurse-inspired fitted dress, clean zipper design, small red-cross details, white nurse cap, pink stethoscope, black over-knee stockings, wink or sweet smile, one hand on waist, one hand near collar, simple solid studio background, soft even light, high-end light cosplay fashion shoot.
+```
+
+Risk controls:
+
+```text
+adult subject, professional light cosplay not medical misinformation, no sexualized patient context, no explicit exposure, no underage look, no fetish framing.
+```
+
+### 16. Xianxia Sword Action Poster
+
+Use for dynamic guofeng/xianxia action images with strong perspective.
+
+Key ingredients:
+
+```text
+9:16 epic xianxia concept poster, adult East Asian female sword cultivator, black hair high updo, gold classical crown and forehead chain, cold determined eyes, standing or lunging from ancient pine over mountain clouds, one sword thrust toward camera, ultra-wide perspective, long ribbons and sleeves flying in strong wind, white-gold-gray gauze hanfu, blue-white sword glow, waterfalls, cliffs, cloud sea, cold gray-blue palette, cinematic motion and heroic clarity.
+```
+
+Risk controls:
+
+```text
+no distorted perspective on face/body, no broken sword hand, no excessive cleavage, no game-card clutter if cinematic poster is requested.
+```
+
+### 17. Ice Fantasy Cosplay Bust Portrait
+
+Use for high-end cosplay official-promo style portraits with cold blue fantasy styling.
+
+Key ingredients:
+
+```text
+9:16 realistic fantasy cosplay bust portrait, adult East Asian cos model, ice-blue long curled wig, side bangs, cool fairy makeup, calm noble gaze, hand touching cheek or chin, blue-silver-white ice fantasy costume, jewel chest ornament, star pendant, translucent tulle sleeves, silver armor motifs, ice-crystal earrings, complex shoulder pieces, blue smoke and ice mist background, soft cold light, precise rim light, high-detail jewelry and fabric.
+```
+
+Risk controls:
+
+```text
+adult, no plastic cosplay skin, no cheap costume material, no anime face if photoreal, no excessive exposure.
+```
+
+### 18. Soft Guofeng Sitting Portrait
+
+Use for gentle guofeng/han-element cosplay portraits in wooden corridors or traditional architecture.
+
+Key ingredients:
+
+```text
+9:16 soft guofeng portrait, young adult woman, kneeling or half-kneeling in wooden building corridor, wooden columns, railings, steps, black long hair with soft bangs, pink-white floral hair accessory, shy quiet expression, ivory-white han-element gauze dress, bustier-style inner layer safely covered by translucent outer robe, pale blue ribbon detail, pale gold embroidery, wide flowing sleeves, layered tulle skirt spread on floor, warm wood tone and soft light.
+```
+
+Risk controls:
+
+```text
+adult, no underage softness, no exposed sensitive areas, no transparent exposure, no awkward kneeling anatomy, no messy background.
+```
+
+### 19. Japanese Cinematic Flower Close-Up
+
+Use for airy, romantic, Japanese film-style portraits with flowers and dappled light.
+
+Key ingredients:
+
+```text
+9:16 close-up Japanese cinematic portrait, adult East Asian woman surrounded by white flowers, lazy afternoon mood, warm low-saturation vintage film color, cream white and yellow-green palette, backlight or side-backlight through petals, Komorebi dappled light on skin and shoulders, f/1.4-f/2 shallow depth of field, dreamy bokeh foreground and background, clear emotional eyes, airy feel, Iwai Shunji / Rinko Kawauchi-inspired softness.
+```
+
+Risk controls:
+
+```text
+adult not schoolgirl, no childlike framing, no over-blur on eyes, no overexposed flowers, no text.
+```
+
+### 20. Rainy Neon Fashion Portrait
+
+Use for cinematic rainy city fashion portraits, including tasteful swimwear or black styling in a high-fashion context.
+
+Key ingredients:
+
+```text
+vertical high-end cinematic fashion portrait, 22+ adult Japanese/East Asian woman, rainy night city street, transparent vinyl umbrella, wet black hair naturally on cheeks and shoulders, tasteful black fashion swimwear or sleek rainwear styling, quiet melancholic eye contact, street lamps and neon bokeh, rain droplets sparkling in HDR light, medium-full shot, RED Monstro 8K VV feel, slight anamorphic blur, emotional commercial fashion atmosphere.
+```
+
+Risk controls:
+
+```text
+adult, fashion context, no explicit wet-body seduction, no transparency, no body-part close-up, no unsafe street vulnerability framing.
+```
+
+### 21. Xiaohongshu Natural Lifestyle Still
+
+Use for realistic, quiet, everyday Chinese social-platform portraits.
+
+Key ingredients:
+
+```text
+9:16 realistic cinematic everyday portrait, young adult East Asian woman 20-26, natural East Asian features, not influencer-like, warm bedroom/window/living-room setting, bed linens, cushions, curtains, lamp, book or cup, soft indoor light from bedside lamp or weak window light, light makeup, real pores and slight imperfections, simple stable pose on bed/sofa/window, 35mm or 50mm lens, natural film-still warmth, gentle story feeling.
+```
+
+Risk controls:
+
+```text
+adult but natural, no over-sexual bedroom framing, no cheap studio look, no excessive retouch, no complex twisted pose.
+```
+
+### 22. Pure Young-Adult Portrait Generator
+
+Use when the user asks for "清纯写真" or gives a parameter form for clean youthful adult portraits.
+
+Key ingredients:
+
+```text
+young adult East Asian woman 20-26, clean natural beauty, clear skin, bright eyes, shoulder-neck line, collarbone line, soft waist line, coordinated legs, light and relaxed body contour, natural expression, clean outfit, bright light, real scene, high-quality social-platform portrait, not cheap studio, not selfie, not over-retouched.
+```
+
+Expansion dimensions:
+
+```text
+style, scene, clothing, temperament, body direction, line emphasis, lens direction, aspect ratio, first visual hook.
+```
+
+Risk controls:
+
+```text
+no underage look, no deliberate childishness, no lowbrow seduction, no excessive exposure.
+```
+
+### 23. Locked Curvy Portrait Generator
+
+Use when the user provides the stricter parameter-lock template with fixed "丰腴曲线".
+
+Key ingredients:
+
+```text
+lock all filled parameters, young adult East Asian woman 20-26 unless specified older, curvy full figure, natural full bust contour in tasteful clothing, clear waist, waist-hip transition, rounded hip-leg lines, shoulder-neck softness, elegant S-shaped posture, style and face direction both preserved, harmonized through makeup, expression, color, light, posture, and scene.
+```
+
+Output structure:
+
+```text
+参数锁定复核
+完整生成提示词
+本次自动补全部分
+主要吸睛点
+负面限制词
+```
+
+Risk controls:
+
+```text
+do not override locked user choices, no exaggerated anatomy, no explicit exposure, no underage look.
+```
+
+### 24. Moonlit 3D CG Bedroom Character
+
+Use for mature 3D CG anime-realistic bedroom/window scenes with satin/lace styling.
+
+Key ingredients:
+
+```text
+9:16 high-detail 3D CG realistic anime-style adult fantasy woman 22-26, silver-gray long wavy hair, blue glass-like eyes, thigh-to-head mid-close framing, sitting on bed or window-side, slight side turn, lazy quiet posture, black satin lace camisole dress with safe coverage, dark blue-gray loose sheer shawl on shoulders and arms, deep blue night bedroom, cold moonlight through window but no visible moon, soft volume light, silk and lace material detail, realistic skin, clean cinematic character poster finish.
+```
+
+Risk controls:
+
+```text
+adult, no loli look, no nipple show-through, no excessive nudity, no visible moon if user forbids it, no broken fingers or distorted body.
+```
+
+### 25. Bridal Couture Magazine Cover Duo
+
+Use for elegant duo bridal covers. If the user requests explicit kissing or tongue contact, redirect to romantic near-kiss or soft kiss without explicit sexual detail.
+
+Key ingredients:
+
+```text
+ultra-real luxury bridal magazine cover, two elegant adult Korean/East Asian women, complementary couture bridal looks, ivory duchess satin off-shoulder ball gown with cathedral train and 3D floral appliques, pale pink silk bias-cut slip-style bridal gown with lace tulle shawl, dark soft long curls, diamond and pearl jewelry, warm champagne studio, rose petals, 85mm lens, crisp satin and lace texture, romantic intimate embrace, cheek-to-cheek, forehead touch, near-kiss, or gentle closed-mouth kiss, Vogue-like editorial spacing if text is allowed.
+```
+
+Risk controls:
+
+```text
+no explicit tongue contact, no sexual act, no pornographic framing, no watermarks, avoid adding readable magazine masthead unless user explicitly wants text.
+```
+
+### 26. Product Exploded-Structure Infographic
+
+Use for non-portrait product information boards.
+
+Key ingredients:
+
+```text
+vertical 4:5 high-end product exploded-structure information board, light gray-white minimal background, central product in 3/4 perspective, components floating with slight offsets in assembly directions, realistic precise parts, metal reflection, matte plastic, glass highlights, circuit details, heatsink fins, soft contact and floating shadows, Chinese title block, 6-9 numbered component labels, thin blue guide lines, bottom feature bar with 3-4 icon modules.
+```
+
+Risk controls:
+
+```text
+labels readable but not overcrowded, no black heavy background, no random fake brand marks unless provided, no impossible component geometry.
+```
+
+### 27. New-Chinese Guofeng Half Portrait
+
+Use for 4K photoreal new-Chinese half portraits with qin/qi/shu/hua atmosphere.
+
+Key ingredients:
+
+```text
+native 4K vertical photoreal new-Chinese guofeng half portrait, adult Chinese woman in her early 20s, clear face, emotional eye contact, long black hair, delicate hair ornament, light summer hanfu or new-Chinese gauze outfit, elegant upper-body line, natural wrist and fingers, soft natural window light, blurred background, qin/qi/shu/hua element as atmosphere only.
+```
+
+Element choices:
+
+```text
+qin: guqin at lower or side area, clear strings and wood grain, hand resting near instrument
+qi: wooden board and black-white stones softly blurred at side, calm intelligent gaze
+shu: scroll, xuan paper, brush, inkstone as background atmosphere
+hua: ink painting or landscape scroll, figure feels like emerging from painting
+```
+
+Risk controls:
+
+```text
+no text/watermark, cultural object does not block subject, no over-costume clutter, no excessive exposure.
+```
+
+### 28. Oriental Scroll Breakout Poster
+
+Use for "画中美人 · 破卷而出" or any subject emerging from a scroll.
+
+Key ingredients:
+
+```text
+9:16 oriental fantasy narrative poster, central vertical long scroll as core structure, beautiful realistic East Asian subject emerging from the scroll, body partly outside and partly still inside, outside face/hands/upper body more realistic and sharp, inside hair/skirt/sleeves still painterly and misty, foreground hand or sleeve creates depth, flower branches, birds, silk ribbons, petals, mist, gold particles, low-information dark teal/gray/gold atmosphere, clear reading path from face to hand to scroll-world relationship.
+```
+
+Risk controls:
+
+```text
+not a flat painting, not a normal guofeng portrait, no horror/ghost feeling, no unreadable text, no modern logo, no game-card clutter.
+```
+
+### 29. White Snake Character Archive Poster
+
+Use for a 3D character archive series based on classic White Snake legend archetypes.
+
+Key ingredients:
+
+```text
+3:4 high-finish 3D character archive poster, classic White Snake cinematic feeling, full-body central figure, natural foreground-breaking hand or prop, six to eight light translucent story panels with numbers and short Chinese notes, thin gold borders and connectors, left-side character name and small tags, bottom story index line, background with West Lake, broken bridge, rain mist, willow, Leifeng Pagoda, Jinshan Temple, pharmacy, river fog, or bamboo shadows.
+```
+
+Character routes:
+
+```text
+白素贞: dignified gentle mature beauty, oil-paper umbrella or water sleeves
+小青: agile playful sharp protector, green sword breaking foreground
+许仙: gentle scholar physician, prescription scroll, medicine box, or umbrella
+法海: stern monk, golden bowl forward, staff as support
+```
+
+Risk controls:
+
+```text
+classic filmic legend mood, not game card, do not copy real actor face, foreground prop complete and not cropped, no unreadable text clutter.
+```
+
+### 30. Reference-Photo Mural Self-Portrait Concept
+
+Use when the user uploads a reference portrait and wants a playful mural scene.
+
+Key ingredients:
+
+```text
+use uploaded portrait as identity reference for face shape, hairstyle, hair color, skin texture, and overall temperament; realistic outdoor courtyard or alley with clean white wall; person wearing fluffy yellow animal onesie with cute hood and small ears; side kneeling or crouching pose; holding paintbrush; painting a giant wall mural portrait of themselves; painting tools, palette, paint cans, metal brush bucket, natural colored paint traces; mural has hand-painted realistic oil-paint texture; warm cute healing atmosphere; real camera photography.
+```
+
+Risk controls:
+
+```text
+preserve reference identity if user asks, do not claim identity if unknown, no plastic skin, no anime style, no duplicate real person except mural representation, no text, no watermark, correct perspective between person and wall.
+```
+
+### 31. Overhead Flash Bedroom Editorial
+
+Use for restrained cold-sweet bedroom flash editorials.
+
+Key ingredients:
+
+```text
+vertical 4:3 adult female fashion portrait, subject lying on clean white bed, diagonal overhead camera, clear centered face, relaxed body, large white negative space from sheet and pillow, cold-sweet expression, black wavy hair spread naturally, cool nude makeup, black sheer long-sleeve top with tasteful layered coverage, silver earrings or thin bracelet, direct phone/camera flash, hard shadow, bright highlights, black-white-gray palette with low-saturation pink, bedroom flash editorial, slight Y2K soft grunge.
+```
+
+Risk controls:
+
+```text
+adult, restrained intimate editorial not explicit private content, no pornographic pose, no overexposure through sheer fabric, no exaggerated chest-waist ratio, no messy bed props.
+```
+
 ## Ready-to-Use Safe Examples
 
 ### 4K Landscape Example
@@ -962,6 +1383,8 @@ This iteration adds:
 - Mature sensual prompt expansion that keeps adult boundaries clear.
 - Scene-specific reference patterns for pool, waterpark, window, backlit back portrait, forest Tyndall light, morning chiffon, fashion low-angle, romantic 3D CG duo, and Dunhuang mythic wall art.
 - High-priority garment occlusion and scale control for deep-neckline couture, side cutouts, metallic silk/satin, full figures, and red-carpet evening gowns.
+- Image-type recognition and routing for roleplay fashion, fantasy elf, nurse-themed studio, xianxia action, ice cosplay, soft guofeng, Japanese flower close-up, rainy neon fashion, Xiaohongshu lifestyle, clean portrait parameter systems, bridal couture, product exploded views, new-Chinese guofeng, oriental scroll breakout, White Snake archive, reference-photo mural concepts, and overhead flash bedroom editorials.
+- Parameter-locking behavior: preserve every user-filled value exactly, only auto-complete fields marked "自动" or left blank, and harmonize style/face/body conflicts without replacing locked choices.
 - A rule for short prompts: expand sparse ideas into professional visual language instead of relying on explicit exposure.
 
 Combined rule:
