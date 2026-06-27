@@ -11,6 +11,20 @@ A skill pack designed for AI agents to master GPT Image 2 prompt engineering.
 
 一套从互联网社区最佳实践中收集融合的 GPT Image 2 提示词工程技能包。
 
+![Skill architecture](assets/skill-map.svg)
+
+## 一键学习指令 | One-Shot Agent Learning Prompt
+
+把下面这段话直接发给 Hermes Agent、OpenClaw Codex、Claude Code 或其他支持读取仓库的 AI 智能体：
+
+```text
+请把这个 GitHub 仓库学习为一个 GPT Image 2 提示词工程 skill。
+
+先完整读取 SKILL.md，掌握路由、锁参、敏感词转译、模块化提示词、图片反推、参数导演和输出规则。
+当任务需要具体方法、模板或模式库时，按 SKILL.md 的 Reference Files 表读取 references/ 下的对应文件。
+之后遇到 GPT Image 2 提示词扩写、改写、图片反推、安全转译、参数化生成、4K 设置或失败修复任务时，直接按这个 skill 执行。
+```
+
 **核心功能 | Core Functions:**
 - **敏感→安全转换**：将直白/敏感提示词转为专业视觉语言，安全可出图
   Sensitive→Safe conversion: transform raw prompts into safety-aligned professional prompts
@@ -130,4 +144,4 @@ A skill pack designed for AI agents to master GPT Image 2 prompt engineering.
 
 ## License
 
-MIT
+[MIT](LICENSE)
